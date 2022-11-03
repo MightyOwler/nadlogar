@@ -3,6 +3,9 @@ from .meta import *
 
 class ElementiMnozice(Problem):
     """Problem za izpis elementov množice iz podanega predpisa."""
+    
+    # Seznam pogojev predstavlja, katere primere nalog bomo sestavljali:
+    # | : deli, < : je strogo manjše, <= je manjše ali enako
 
     POGOJ = ["|", "<", "<="]
     POGOJ_LATEX = {"|": r"\mid", "<": r"\lt", "<=": r"\le"}
@@ -36,6 +39,22 @@ class ElementiMnozice(Problem):
             stevilo = random.randint(5, 8)
             ustrezni = list(range(1, stevilo + 1))
         mnozica = sympy.FiniteSet(*[a * x + b for x in ustrezni if a * x + b > 0])
+        
+        # Treba je ugotoviti, kaj nam predstavlja tak output podatkov (v slovarju)
+        # Kje se vidi, kako to uporabiti?
+        # Sklepam, da je za vsak tip naloge nek template, kjer na ustreznih mestih uporabimo ustrezne podatke
+        # slovarja, ki ga vrne funkcija generate().
+        # Ali to pomeni, da za vsak posamezen podrazred Problem-a obstaja nek ustrezen template? DA
+        # To bi pomenilo, da je takih templatov kar veliko, vendar verjetno nekje tako ali tako morajo biti. DA
+        
+        # ODGOVOR: "Templati" navodil se skrivajo v nadlogar/problems/fixtures/initial.json
+        # Tam se skriva tudi odgovor na vprašanje glede generate() funkcij: funckije pač generirajo nek ustrezen
+        # slovar s ključi, ki so vsi vsebovani v teh navodilih
+        # Če hočemo ustvariti novo nalogo, moramo torej poskrbeti, da naredimo nek razred, s katerim lahko generiramo nek slovar,
+        # ki ga uporabimo za to da v navodila na ustrezna mesta vstavimo ustrezne vrednoti
+        
+        # Ali je treba initial.json pisati na roko, oz. kje se lahko naredi nove tipe nalog, je pa še treba ugotoviti.
+        
         return {
             "n": sympy.latex(sympy.simplify(a * n + b)),
             "pogoj": self.POGOJ_LATEX[pogoj],

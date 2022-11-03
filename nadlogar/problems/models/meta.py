@@ -60,6 +60,9 @@ class Problem(models.Model):
         default=1,
     )
 
+    # Razred 'Meta' obstaja zato, da lahko dobimo informacije o razredu 'Problem' (oz. v splošnem o nekem razredu), 
+    # brez da ustvarimo kak objekt tega razreda
+    
     class Meta:
         default_related_name = "problems"
 
@@ -77,6 +80,9 @@ class Problem(models.Model):
         self.content_type = ContentType.objects.get_for_model(type(self))
         super().save(*args, **kwargs)
 
+
+    # To nekemu objektu dodeli objekt ustrenega tipa
+
     def downcast(self):
         content_type = self.content_type
         if content_type.model_class() == type(self):
@@ -85,10 +91,15 @@ class Problem(models.Model):
 
     def generate(self):
         raise NotImplementedError
+    
+    # Ta funkcija v tej datoteki ni uporabljen, izgleda služi preverjanju pogoja
 
     def validate(self, condition):
         if not condition:
             raise GeneratedDataIncorrect
+        
+    # Ta funkcija generira naključne podatke nekega objekta razreda 'Problem'
+    # Pri tem upošteva, koliko podatkov želimo
 
     def generate_data(self, seed, count):
         data = []
@@ -101,12 +112,18 @@ class Problem(models.Model):
                 except GeneratedDataIncorrect:
                     pass
         return data
+    
+    # Ta funkcija generira naključne podatke in tekst nalogi. Verjetno ena pomembnejših
 
     def generate_data_and_text(self, student=None):
         seed = (self.id, None if student is None else student.id)
         data = self.generate_data(seed, self.number_of_subproblems)
         rendered_text = self.text.render(data)
         return data, rendered_text
+
+
+    # Ta funkcija vrne primer podatkov in teksta, glede na to kak problem imamo
+    # Funkcija ni del razreda 'Problem' (@staticmethod)
 
     @staticmethod
     def example_data_and_text(content_type):
