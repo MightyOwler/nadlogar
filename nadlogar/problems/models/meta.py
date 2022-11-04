@@ -59,7 +59,7 @@ class Problem(models.Model):
         help_text="Če je izbrana več kot ena naloga, bodo navodila našteta v seznamu.",
         default=1,
     )
-
+    
     # Razred 'Meta' obstaja zato, da lahko dobimo informacije o razredu 'Problem' (oz. v splošnem o nekem razredu), 
     # brez da ustvarimo kak objekt tega razreda
     
@@ -125,6 +125,10 @@ class Problem(models.Model):
     # Ta funkcija vrne primer podatkov in teksta, glede na to kak problem imamo
     # Funkcija ni del razreda 'Problem' (@staticmethod)
 
+    # Izgleda ima ta funkcija problem, če imamo kak nenavaden content_type.
+    # Torej moramo nekje definirati content_type?
+    # Content type pa potrebuje model_class
+    
     @staticmethod
     def example_data_and_text(content_type):
         problem = content_type.model_class()()

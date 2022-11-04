@@ -21,6 +21,8 @@ def _get_problem_if_allowed(request, group_id: int, document_id: int, problem_id
         raise PermissionDenied
 
 
+# Tukaj je treba razmisliti, zakaj pokličemo generator._meta.verbose_name
+
 @login_required
 def choose_problem(request, group_id: int, document_id: int):
     problem_groups = {}

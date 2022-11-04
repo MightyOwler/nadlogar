@@ -1,6 +1,21 @@
 from .meta import *
 
 
+class BrezveznoImeProblema(Problem):
+    """Ta razred je samo zato, da vidimo, kaj se zgodi na serverju, če dodamo nek razred."""
+
+    class Meta:
+        verbose_name = "Množice / brezvezen problem"
+
+    # če poženemo server brez generate() funkcije, v kakem podrazredu Problem-a, 
+    # potem vrne NotImplementedError
+    # Ugotoviti je treba, kako naj izgleda output, da bo delovalo
+    
+    
+    
+    def generate(self):
+        return {"1":"1", "2":"2"}
+
 class ElementiMnozice(Problem):
     """Problem za izpis elementov množice iz podanega predpisa."""
     
@@ -16,7 +31,14 @@ class ElementiMnozice(Problem):
         choices=[(True, "Da"), (False, "Ne")],
         default=True,
     )
-
+    
+    # verbose_name je ime, ki ga uporabnik vidi, ko izbira predmete. 
+    # Natančneje: uporabnik vidi problems | Množice / elementi iz predpisa
+    # Torej: problems | Množice / {verbose_name}
+    
+    # To pomeni, da se verjento nekje pokliče self.Meta.verbose_name
+    
+    
     class Meta:
         verbose_name = "Množice / elementi iz predpisa"
 
