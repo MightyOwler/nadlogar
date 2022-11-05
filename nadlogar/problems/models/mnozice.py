@@ -14,7 +14,7 @@ class BrezveznoImeProblema(Problem):
     
     
     def generate(self):
-        return {"1":"1", "2":"2"}
+        return {"prvo_stevilo":sympy.latex(1), "drugo_stevilo":sympy.latex(2)}
 
 class ElementiMnozice(Problem):
     """Problem za izpis elementov množice iz podanega predpisa."""
@@ -32,7 +32,7 @@ class ElementiMnozice(Problem):
         default=True,
     )
     
-    # verbose_name je ime, ki ga uporabnik vidi, ko izbira predmete. 
+    # verbose_name je ime, ki ga uporabnik vidi, ko izbira naloge. 
     # Natančneje: uporabnik vidi problems | Množice / elementi iz predpisa
     # Torej: problems | Množice / {verbose_name}
     
